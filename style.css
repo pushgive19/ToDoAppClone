@@ -1,0 +1,28 @@
+body{
+    background-color:tomato;
+    height:100%;
+}
+
+.clock, .clock h1{
+    color: white;
+    padding:0;
+    margin:0;
+    font-size:50px;
+}
+.greeting, .greetingForm{
+    display:none;  
+    color:white;
+    margin:0;
+}
+
+.showing{
+    display:block;
+}
+
+button{
+    border:none;
+    color:green;
+    background-color:transparent;
+    font-size:15px;
+    font-weight:bold;
+}
