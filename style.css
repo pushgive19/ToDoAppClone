@@ -26,3 +26,9 @@ button{
     font-size:15px;
     font-weight:bold;
 }
+.toDo{
+    color:white;
+    list-style-type:none;
+    font-weight:bold;
+    
+}
