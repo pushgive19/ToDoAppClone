@@ -1,76 +1,98 @@
 const toDoForm = document.querySelector(".js-toDoForm"),
     toDoInput = toDoForm.querySelector("input"),
-    toDo = document.querySelector(".js-toDo");
+    ul = document.querySelector(".js-toDoList");
 
 const TODO_LS = "todo";
-let TODO_ARY = [];
+const COMPLETE_LS = "complete"
 
-function paintToDo(text){
-    const li = document.createElement("li");
-    const span= document.createElement("span");
-    const delBtn =  document.createElement("button");
-    const idNum = TODO_ARY.length+1;
-    
-
-    li.appendChild(span);
-    li.appendChild(delBtn);
-    toDo.appendChild(li);
-    li.id =idNum;
-    // li.setAttribute("id", idNum);/////////////////////////////////check
-    span.innerText =text;
-    delBtn.innerText = "✔";
-    delBtn.addEventListener("click", handleClick);
-
-    const OBJ = {
-        id:idNum, 
-        TODO_LS: text  
-    }
-    TODO_ARY.push(OBJ);//이것 변수로 해줬으면 훨씬 좋았을 텐데
-    saveToDo();
-    
-    //배열로 저장, 오브젝트 할때 뭔지 알지
-    
-    //체크하면 사라지는거 or <delete>되는거 해보자.
-}
-function handleClick(event){
-    const target = event.target;
-    const node = target.parentNode;
-    toDo.removeChild(node);
-    
-    const cleanToDo = TODO_ARY.filter(function(delId){
-        return delId.id !== parseInt(node.id);
-    })
-    
-    TODO_ARY = cleanToDo;
-    saveToDo();
-}
+let toDo_ary = [];
 
 function saveToDo(){
-    // TODO_ARY.push({ TODO_LS: toDoInput.value  });
-    const json = JSON.stringify(TODO_ARY);
-    localStorage.setItem(TODO_LS, json);
+    localStorage.setItem(TODO_LS,JSON.stringify(toDo_ary));
 }
-function handleSubmit(event){
-    event.preventDefault();
-    const inputToDo = toDoInput.value;
+
+function deleteToDo(event){
+    const li = event.target.parentNode;
+    const idNum = parseInt(li.id);
+    li.parentNode.removeChild(li);//이거 기억 잘하자
+    const removeToDo = toDo_ary.filter(function(data){
+        console.log(data.id, idNum);
+        return data.id !== idNum;
+    })
+    toDo_ary = removeToDo;
+    saveToDo();
+}
+function completeToDo(event){
+    const li = event.target.parentNode;
+    const span = li.children[2];
+    span.classList.add("complete-todo");
+   
+    toDo_ary.forEach(function(ary){
+        if(ary.id === parseInt(li.id)){
+        ary.isComplete = true;
+        }
+    })
+    saveToDo();
+}
     
-    paintToDo(inputToDo);
-    toDoInput.value = ""; //입력창 빈칸으로 만들기
+   
+function printToDo(data, isComplete){
+    const completeBtn = document.createElement("button"),
+        deleteBtn = document.createElement("button"),
+        span = document.createElement("span")
+        li = document.createElement("li");
+        const newId = toDo_ary.length+1;
+
+    deleteBtn.addEventListener("click", deleteToDo);
+    completeBtn.addEventListener("click", completeToDo);
+
+    completeBtn.textContent = "✔";
+    deleteBtn.textContent = "🗑";
+        
+    span.textContent = data;
+    li.appendChild(completeBtn);
+    li.appendChild(deleteBtn);
+    li.appendChild(span);
+    ul.appendChild(li);
+    li.id = newId;
+
+    if(isComplete !== true){
+        const toDo_obj = {
+            id:newId,
+            todo:data,
+            isComplete:"" //나중에 넣을꺼야.
+        }
+        toDo_ary.push(toDo_obj);
+        saveToDo();
+    }else{
+        const toDo_obj = {
+            id:newId,
+            todo:data,
+            isComplete:true //나중에 넣을꺼야.
+        }
+        toDo_ary.push(toDo_obj);
+        saveToDo();
+        span.classList.add("complete-todo")
+    }
     
     
+}
+function handleSubmit(e){
+    e.preventDefault();
+    
+    const toDoContent = toDoInput.value;
+    printToDo(toDoContent);
+    // saveToDo(toDoContent);
+    toDoInput.value = "";
 }
 function loadToDo(){
-    const currentValue = localStorage.getItem(TODO_LS);
-    if(currentValue === null){
-        // askForToDo();
-    }else{
-        const json = JSON.parse(currentValue);
-        json.forEach(function(toDo){
-            paintToDo(toDo.TODO_LS);
+    const loadedToDo =JSON.parse(localStorage.getItem(TODO_LS) );
+    if(loadedToDo){
+        loadedToDo.forEach(function(loadedValue){
+            printToDo(loadedValue.todo, loadedValue.isComplete);
         });
     }
 }
-
 function init(){
     loadToDo();
     toDoForm.addEventListener("submit", handleSubmit);

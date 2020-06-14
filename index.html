@@ -1,36 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>momotum</title>
-    <link rel = "stylesheet" href = "style.css"/>
-    <script src="https://kit.fontawesome.com/2c6cfb22b9.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <div class="center">
-    <div class="js-clock clock ">
-        <h1></h1>
-    </div>
-    
-        <form class="js-greetingForm greetingForm ">
-            <input type ="text" placeholder="이름 적으세요"/>
-        </form>
-        <p class="js-greeting greeting "></p>
-    
-    
-        <form class = "js-toDoForm toDoForm ">
-            <input type="text" placeholder="중요한 한가지"/>
-        </form>
-        <P class="js-toDo toDo "></P>
-    </div>
-    <div class="top-right">
-        <p class="js-weather weather "></p>
+    <div class="main">
+        <div class="main-left">
+            <span class="js-town weather"></span>
+            <span class="js-temp weather"></span>
+        </div>
+        <div class="main-center">
+            <div class="center-center">
+                <span class="pm">pm</span>
+                <div class="js-clock clock"></div>
+            </div>
+            <div class="center-bottom">
+                <form class="js-nameForm name-form">
+                    <input type="text" placeholder="이름을 적어주세요!"/>
+                </form>
+                <span class="js-greeting greeting"></span>
+            </div>
+        </div>
+        <div class="main-right">
+            <form class="js-toDoForm toDoForm">
+                <input type="text" placeholder="할일 목록"/>
+            </form>
+            <ul class="js-toDoList toDoList">
+
+            </ul>
+        </div>
     </div>
     <script src="clock.js"></script>
-    <script src="greeting.js"></script>
+    <script src="person_name.js"></script>
     <script src="todo.js"></script>
-    <script src="weather.js "></script>
     <script src="bgimg.js"></script>
+    <script src="weather.js"></script>
 </body>
 </html>
