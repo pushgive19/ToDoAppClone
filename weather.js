@@ -20,7 +20,8 @@ function successGetting(location){
 function climateIcon(iconNum){
     const iconImage = new Image();
     iconImage.src = `http://openweathermap.org/img/wn/${iconNum}@2x.png` ;
-        mainLeft.appendChild(iconImage);
+        // mainLeft.appendChild(iconImage);
+        mainLeft.insertBefore(iconImage, townName);
     }
 
 function paintWeather(lat,lon){

@@ -24,7 +24,7 @@ function deleteToDo(event){
 }
 function completeToDo(event){
     const li = event.target.parentNode;
-    const span = li.children[2];
+    const span = li.children[1];
     span.classList.add("complete-todo");
    
     toDo_ary.forEach(function(ary){
@@ -46,14 +46,14 @@ function printToDo(data, isComplete){
     deleteBtn.addEventListener("click", deleteToDo);
     completeBtn.addEventListener("click", completeToDo);
 
-    completeBtn.textContent = "✔";
-    deleteBtn.textContent = "🗑";
+    completeBtn.textContent = "⭕";
+    deleteBtn.textContent = "❌";
         
     span.textContent = data;
     li.appendChild(completeBtn);
-    li.appendChild(deleteBtn);
     li.appendChild(span);
     ul.appendChild(li);
+    li.appendChild(deleteBtn);
     li.id = newId;
 
     if(isComplete !== true){
